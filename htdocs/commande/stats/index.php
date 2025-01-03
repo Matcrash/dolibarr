@@ -97,8 +97,10 @@ $startyear = $year - (!getDolGlobalInt('MAIN_STATS_GRAPHS_SHOW_N_YEARS') ? 2 : m
 $endyear = $year;
 
 //Get Start Fiscal Month
-$startmonth = $conf->global->SOCIETE_FISCAL_MONTH_START?($conf->global->SOCIETE_FISCAL_MONTH_START-1):0;
-if (empty($conf->global->GRAPH_USE_FISCAL_YEAR)) $startmonth = 0;
+$startmonth = getDolGlobalInt('SOCIETE_FISCAL_MONTH_START', 1);
+if (!getDolGlobalString('GRAPH_USE_FISCAL_YEAR')) {
+	$startmonth = 1;
+}
 
 // Load translation files required by the page
 $langs->loadLangs(array('orders', 'companies', 'other', 'suppliers'));
@@ -175,12 +177,12 @@ if (!$mesg) {
 	$i = $startyear;
 	$legend = array();
 	while ($i <= $endyear) {
-		if ($startmonth != 0) {
-			$legend[]=sprintf("%d/%d",$i-2001, $i-2000);
+		if ($startmonth != 1) {
+			$legend[] = sprintf("%d/%d", $i - 2001, $i - 2000);
 		}
 		else
 		{
-			$legend[]=$i;
+			$legend[] = $i;
 		}
 		$i++;
 	}
@@ -229,8 +231,8 @@ if (!$mesg) {
 	$i = $startyear;
 	$legend = array();
 	while ($i <= $endyear) {
-		if ($startmonth != 0) {
-			$legend[]=sprintf("%d/%d",$i-2001, $i-2000);
+		if ($startmonth != 1) {
+			$legend[] = sprintf("%d/%d", $i - 2001, $i - 2000);
 		}
 		else
 		{
@@ -282,8 +284,8 @@ if (!$mesg) {
 	$i = $startyear;
 	$legend = array();
 	while ($i <= $endyear) {
-		if ($startmonth != 0) {
-			$legend[]=sprintf("%d/%d",$i-2001, $i-2000);
+		if ($startmonth != 1) {
+			$legend[] = sprintf("%d/%d", $i - 2001, $i - 2000);
 		}
 		else
 		{
