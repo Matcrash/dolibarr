@@ -96,6 +96,10 @@ $year = GETPOSTINT('year') > 0 ? GETPOSTINT('year') : $nowyear;
 $startyear = $year - (!getDolGlobalInt('MAIN_STATS_GRAPHS_SHOW_N_YEARS') ? 2 : max(1, min(10, getDolGlobalInt('MAIN_STATS_GRAPHS_SHOW_N_YEARS'))));
 $endyear = $year;
 
+//Get Start Fiscal Month
+$startmonth = $conf->global->SOCIETE_FISCAL_MONTH_START?($conf->global->SOCIETE_FISCAL_MONTH_START-1):0;
+if (empty($conf->global->GRAPH_USE_FISCAL_YEAR)) $startmonth = 0;
+
 // Load translation files required by the page
 $langs->loadLangs(array('orders', 'companies', 'other', 'suppliers'));
 
@@ -139,7 +143,7 @@ if ($mode == 'supplier') {
 
 
 // Build graphic number of object
-$data = $stats->getNbByMonthWithPrevYear($endyear, $startyear);
+$data = $stats->getNbByMonthWithPrevYear($endyear, $startyear, $startmonth);
 
 //var_dump($data);
 // $data = array(array('Lib',val1,val2,val3),...)
@@ -171,7 +175,13 @@ if (!$mesg) {
 	$i = $startyear;
 	$legend = array();
 	while ($i <= $endyear) {
-		$legend[] = $i;
+		if ($startmonth != 0) {
+			$legend[]=sprintf("%d/%d",$i-2001, $i-2000);
+		}
+		else
+		{
+			$legend[]=$i;
+		}
 		$i++;
 	}
 	$px1->SetLegend($legend);
@@ -189,7 +199,7 @@ if (!$mesg) {
 }
 
 // Build graphic amount of object
-$data = $stats->getAmountByMonthWithPrevYear($endyear, $startyear);
+$data = $stats->getAmountByMonthWithPrevYear($endyear, $startyear, $startmonth);
 //var_dump($data);
 // $data = array(array('Lib',val1,val2,val3),...)
 
@@ -219,7 +229,13 @@ if (!$mesg) {
 	$i = $startyear;
 	$legend = array();
 	while ($i <= $endyear) {
-		$legend[] = $i;
+		if ($startmonth != 0) {
+			$legend[]=sprintf("%d/%d",$i-2001, $i-2000);
+		}
+		else
+		{
+			$legend[]=$i;
+		}
 		$i++;
 	}
 	$px2->SetLegend($legend);
@@ -237,7 +253,7 @@ if (!$mesg) {
 }
 
 
-$data = $stats->getAverageByMonthWithPrevYear($endyear, $startyear);
+$data = $stats->getAverageByMonthWithPrevYear($endyear, $startyear, $startmonth);
 
 
 $fileurl_avg = '';
@@ -266,7 +282,13 @@ if (!$mesg) {
 	$i = $startyear;
 	$legend = array();
 	while ($i <= $endyear) {
-		$legend[] = $i;
+		if ($startmonth != 0) {
+			$legend[]=sprintf("%d/%d",$i-2001, $i-2000);
+		}
+		else
+		{
+			$legend[]=$i;
+		}
 		$i++;
 	}
 	$px3->SetLegend($legend);
