@@ -145,7 +145,7 @@ if ($mode == 'supplier') {
 
 
 // Build graphic number of object
-$data = $stats->getNbByMonthWithPrevYear($endyear, $startyear, $startmonth);
+$data = $stats->getNbByMonthWithPrevYear($endyear, $startyear, 0, 0, $startmonth);
 
 //var_dump($data);
 // $data = array(array('Lib',val1,val2,val3),...)
@@ -201,7 +201,7 @@ if (!$mesg) {
 }
 
 // Build graphic amount of object
-$data = $stats->getAmountByMonthWithPrevYear($endyear, $startyear, $startmonth);
+$data = $stats->getAmountByMonthWithPrevYear($endyear, $startyear, 0, 0, $startmonth);
 //var_dump($data);
 // $data = array(array('Lib',val1,val2,val3),...)
 
